@@ -10827,10 +10827,20 @@ var LoadSubreddit = function (_React$Component) {
   function LoadSubreddit(props) {
     _classCallCheck(this, LoadSubreddit);
 
-    return _possibleConstructorReturn(this, (LoadSubreddit.__proto__ || Object.getPrototypeOf(LoadSubreddit)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (LoadSubreddit.__proto__ || Object.getPrototypeOf(LoadSubreddit)).call(this, props));
+
+    _this.state = {
+      subreddit: ''
+    };
+    return _this;
   }
 
   _createClass(LoadSubreddit, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ subreddit: e.target.value });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -10838,11 +10848,12 @@ var LoadSubreddit = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement('input', { type: 'text', name: 'subreddit', value: this.state.subreddit, onChange: this.handleChange.bind(this) }),
         _react2.default.createElement(
           'button',
           {
             onClick: function onClick() {
-              return _this2.props.dispatch((0, _actions.fetchPosts)('newzealand'));
+              return _this2.props.dispatch((0, _actions.fetchPosts)(_this2.state.subreddit));
             }
           },
           'Fetch Posts'
