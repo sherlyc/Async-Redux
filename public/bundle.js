@@ -10894,10 +10894,25 @@ var Post = function Post(props) {
   return _react2.default.createElement(
     'div',
     null,
-    props.title,
-    ' - Date: ',
-    _moment2.default.unix(props.created).format('dddd, MMMM Do YYYY, h:mm:ss a'),
-    console.log(_moment2.default.unix(props.created)._d)
+    _react2.default.createElement('img', { src: props.thumbnail, height: props.thumbnail_height, width: props.thumbnail_width }),
+    _react2.default.createElement(
+      'h1',
+      null,
+      props.title
+    ),
+    ' ',
+    _react2.default.createElement(
+      'span',
+      null,
+      'Date: ',
+      _moment2.default.unix(props.created).format('dddd, MMMM Do YYYY, h:mm:ss a')
+    ),
+    _react2.default.createElement(
+      'div',
+      null,
+      props.selftext
+    ),
+    console.log(props)
   );
 };
 
