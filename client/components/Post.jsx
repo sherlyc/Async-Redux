@@ -1,12 +1,8 @@
 import React, {PropTypes} from 'react'
+import moment from 'moment'
 
-function convertUTC (utc) {
-  let d= new Date(utc).toString()
-  console.log(d)
-  return d
-}
 const Post = (props) => (
-  <div>{props.title} - Date: {convertUTC(props.created_utc)}</div>
+  <div>{props.title} - Date: {moment.unix(props.created).format('dddd, MMMM Do YYYY, h:mm:ss a')}{console.log(moment.unix(props.created)._d)}</div>
 )
 
 Post.propTypes = {
