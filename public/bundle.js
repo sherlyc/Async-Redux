@@ -10886,12 +10886,18 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Post = function Post(_ref) {
-  var title = _ref.title;
+function convertUTC(utc) {
+  var d = new Date(utc).toString();
+  console.log(d);
+  return d;
+}
+var Post = function Post(props) {
   return _react2.default.createElement(
     'div',
     null,
-    title
+    props.title,
+    ' - Date: ',
+    convertUTC(props.created_utc)
   );
 };
 
@@ -10912,6 +10918,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
@@ -10928,10 +10936,9 @@ var Subreddit = function Subreddit(_ref) {
     'div',
     null,
     subreddits.map(function (post, i) {
-      return _react2.default.createElement(_Post2.default, {
-        key: i,
-        title: post.title
-      });
+      return _react2.default.createElement(_Post2.default, _extends({
+        key: i
+      }, post));
     })
   );
 };
