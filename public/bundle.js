@@ -10803,6 +10803,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(14);
 
 var _react2 = _interopRequireDefault(_react);
@@ -10813,18 +10815,44 @@ var _actions = __webpack_require__(99);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var LoadSubreddit = function LoadSubreddit(_ref) {
-  var dispatch = _ref.dispatch;
-  return _react2.default.createElement(
-    'button',
-    {
-      onClick: function onClick() {
-        return dispatch((0, _actions.fetchPosts)('newzealand'));
-      }
-    },
-    'Fetch Posts'
-  );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LoadSubreddit = function (_React$Component) {
+  _inherits(LoadSubreddit, _React$Component);
+
+  function LoadSubreddit(props) {
+    _classCallCheck(this, LoadSubreddit);
+
+    return _possibleConstructorReturn(this, (LoadSubreddit.__proto__ || Object.getPrototypeOf(LoadSubreddit)).call(this, props));
+  }
+
+  _createClass(LoadSubreddit, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'button',
+          {
+            onClick: function onClick() {
+              return _this2.props.dispatch((0, _actions.fetchPosts)('newzealand'));
+            }
+          },
+          'Fetch Posts'
+        )
+      );
+    }
+  }]);
+
+  return LoadSubreddit;
+}(_react2.default.Component);
 
 LoadSubreddit = (0, _reactRedux.connect)()(LoadSubreddit);
 
