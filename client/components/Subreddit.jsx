@@ -4,7 +4,7 @@ import Post from './Post'
 
 const Subreddit = ({subreddits, status}) => (
   <div>
-    {console.log(status)}
+  <div>{status ? 'loading' : ''}</div>
     {subreddits.map((post, i) =>
       <Post
         key={i}

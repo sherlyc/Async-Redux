@@ -6,8 +6,8 @@ class LoadSubreddit extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      subreddit: '',
-      status: ''
+      subreddit: ''
+
     }
   }
 
@@ -24,7 +24,7 @@ class LoadSubreddit extends React.Component {
     return (<div><input type='text' name='subreddit' value={this.state.subreddit} onChange={this.handleChange.bind(this)}/>
     <button
     onClick={this.handleClick.bind(this)}
-    >Fetch Posts</button><div>{this.state.status}</div></div>)
+    >Fetch Posts</button></div>)
   }
 }
 

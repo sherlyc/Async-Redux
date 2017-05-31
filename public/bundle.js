@@ -10839,8 +10839,8 @@ var LoadSubreddit = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (LoadSubreddit.__proto__ || Object.getPrototypeOf(LoadSubreddit)).call(this, props));
 
     _this.state = {
-      subreddit: '',
-      status: ''
+      subreddit: ''
+
     };
     return _this;
   }
@@ -10869,11 +10869,6 @@ var LoadSubreddit = function (_React$Component) {
             onClick: this.handleClick.bind(this)
           },
           'Fetch Posts'
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          this.state.status
         )
       );
     }
@@ -10967,7 +10962,11 @@ var Subreddit = function Subreddit(_ref) {
   return _react2.default.createElement(
     'div',
     null,
-    console.log(status),
+    _react2.default.createElement(
+      'div',
+      null,
+      status ? 'loading' : ''
+    ),
     subreddits.map(function (post, i) {
       return _react2.default.createElement(_Post2.default, _extends({
         key: i
