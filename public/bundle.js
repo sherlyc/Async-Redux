@@ -10762,7 +10762,7 @@ exports['default'] = thunk;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.receivePosts = undefined;
+exports.loading = exports.receivePosts = undefined;
 exports.fetchPosts = fetchPosts;
 
 var _superagent = __webpack_require__(232);
@@ -10771,23 +10771,32 @@ var _superagent2 = _interopRequireDefault(_superagent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var receivePosts = exports.receivePosts = function receivePosts(posts) {
+var receivePosts = exports.receivePosts = function receivePosts(posts, status) {
   return {
     type: 'RECEIVE_POSTS',
     posts: posts.map(function (post) {
       return post.data;
-    })
+    }),
+    status: status
+  };
+};
+
+var loading = exports.loading = function loading() {
+  return {
+    type: 'LOAD_POSTS'
   };
 };
 
 function fetchPosts(subreddit) {
   return function (dispatch) {
+    dispatch(loading());
     _superagent2.default.get('/api/reddit/subreddit/' + subreddit).end(function (err, res) {
       if (err) {
         console.error(err.message);
+        receivePosts([], err.message);
         return;
       }
-      dispatch(receivePosts(res.body));
+      dispatch(receivePosts(res.body, ''));
     });
   };
 }
@@ -10830,7 +10839,8 @@ var LoadSubreddit = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (LoadSubreddit.__proto__ || Object.getPrototypeOf(LoadSubreddit)).call(this, props));
 
     _this.state = {
-      subreddit: ''
+      subreddit: '',
+      status: ''
     };
     return _this;
   }
@@ -10841,10 +10851,14 @@ var LoadSubreddit = function (_React$Component) {
       this.setState({ subreddit: e.target.value });
     }
   }, {
+    key: 'handleClick',
+    value: function handleClick() {
+      this.setState({ status: 'loading' });
+      this.props.dispatch((0, _actions.fetchPosts)(this.state.subreddit));
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       return _react2.default.createElement(
         'div',
         null,
@@ -10852,11 +10866,14 @@ var LoadSubreddit = function (_React$Component) {
         _react2.default.createElement(
           'button',
           {
-            onClick: function onClick() {
-              return _this2.props.dispatch((0, _actions.fetchPosts)(_this2.state.subreddit));
-            }
+            onClick: this.handleClick.bind(this)
           },
           'Fetch Posts'
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          this.state.status
         )
       );
     }
@@ -10911,8 +10928,7 @@ var Post = function Post(props) {
       'div',
       null,
       props.selftext
-    ),
-    console.log(props)
+    )
   );
 };
 
@@ -10946,10 +10962,12 @@ var _Post2 = _interopRequireDefault(_Post);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Subreddit = function Subreddit(_ref) {
-  var subreddits = _ref.subreddits;
+  var subreddits = _ref.subreddits,
+      status = _ref.status;
   return _react2.default.createElement(
     'div',
     null,
+    console.log(status),
     subreddits.map(function (post, i) {
       return _react2.default.createElement(_Post2.default, _extends({
         key: i
@@ -10984,8 +11002,10 @@ var _Subreddit2 = _interopRequireDefault(_Subreddit);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
+  console.log(state.subreddits);
   return {
-    subreddits: state.subreddits
+    subreddits: state.subreddits.subreddits,
+    status: state.subreddits.loading
   };
 };
 
@@ -11045,15 +11065,24 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function subreddits() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { subreddits: [], loading: false };
   var action = arguments[1];
 
   switch (action.type) {
     case 'RECEIVE_POSTS':
-      return [].concat(_toConsumableArray(action.posts));
+      return {
+        subreddits: [].concat(_toConsumableArray(action.posts)),
+        loading: false
+      };
+    case 'LOAD_POSTS':
+      return _extends({}, state, {
+        loading: true
+      });
 
     default:
       return state;

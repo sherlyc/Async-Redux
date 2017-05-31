@@ -6,7 +6,8 @@ class LoadSubreddit extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      subreddit: ''
+      subreddit: '',
+      status: ''
     }
   }
 
@@ -14,11 +15,16 @@ class LoadSubreddit extends React.Component {
     this.setState({subreddit: e.target.value})
   }
 
+  handleClick () {
+    this.setState({status: 'loading'})
+    this.props.dispatch(fetchPosts(this.state.subreddit))
+  }
+
   render(){
     return (<div><input type='text' name='subreddit' value={this.state.subreddit} onChange={this.handleChange.bind(this)}/>
     <button
-    onClick={() => this.props.dispatch(fetchPosts(this.state.subreddit))}
-    >Fetch Posts</button></div>)
+    onClick={this.handleClick.bind(this)}
+    >Fetch Posts</button><div>{this.state.status}</div></div>)
   }
 }
 

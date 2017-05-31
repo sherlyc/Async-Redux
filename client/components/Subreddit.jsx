@@ -2,8 +2,9 @@ import React, {PropTypes} from 'react'
 
 import Post from './Post'
 
-const Subreddit = ({subreddits}) => (
+const Subreddit = ({subreddits, status}) => (
   <div>
+    {console.log(status)}
     {subreddits.map((post, i) =>
       <Post
         key={i}
