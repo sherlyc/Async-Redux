@@ -10906,7 +10906,7 @@ var Post = function Post(props) {
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement('img', { src: props.thumbnail, height: props.thumbnail_height, width: props.thumbnail_width }),
+    props.thumbnail != 'self' && props.thumbnail != 'default' ? _react2.default.createElement('img', { src: props.thumbnail, height: props.thumbnail_height, width: props.thumbnail_width }) : '',
     _react2.default.createElement(
       'h1',
       null,
